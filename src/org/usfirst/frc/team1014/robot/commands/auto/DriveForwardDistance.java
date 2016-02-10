@@ -9,20 +9,22 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Tze Hei T.
  *
  */
-public class DriveForwardDistance extends CommandBase{
-	
-	public double speed, distance, ultraDistance;
+public class DriveForwardDistance extends CommandBase {
 
-	public DriveForwardDistance(double speed, double distance){
-		this.distance = distance;
-		this.speed = speed;
-		requires((Subsystem)driveTrain);
+	public double speed; // creates a variable for the driving speed
+	public double distance; // creates a variable for the driving distance
+	public double ultraDistance; // creates a variable for ???
+
+	public DriveForwardDistance(double speed, double distance) {
+		this.distance = distance; // sets this class' distance variable equal to the value entered
+		this.speed = speed; // same with speed
+		requires((Subsystem) driveTrain); // requests exclusive use of the driveTrain subsystem
 	}
-	
+
 	@Override
 	protected void initialize() {
 		driveTrain.tankDrive(0, 0);
-		
+
 	}
 
 	@Override
@@ -33,28 +35,28 @@ public class DriveForwardDistance extends CommandBase{
 	@Override
 	protected void end() {
 		driveTrain.tankDrive(0, 0);
-		
+
 	}
 
 	@Override
 	protected void execute() {
-		ultraDistance = driveTrain.getUltraDistance(true);
-		driveTrain.tankDrive(speed, speed);
-		
+		ultraDistance = driveTrain.getUltraDistance(true); // ???
+		driveTrain.tankDrive(speed, speed); // makes the robot move forward at a speed equal to the value entered
+
 	}
 
 	@Override
 	protected void interrupted() {
 		System.out.println("DriveForwardDistance was interrupted");
-		
+
 	}
 
 	@Override
 	protected boolean isFinished() {
-		if(ultraDistance < distance){
+		if (ultraDistance < distance) {
 			return true;
-		}else{
-		return false;
+		} else {
+			return false;
 		}
 	}
 

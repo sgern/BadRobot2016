@@ -12,17 +12,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveForward extends CommandBase {
 	
-	public double driveTime;
-	public double speed;
-	public double startTime;
-	public double passedTime;
+	public double driveTime; //creates a variable for the driving time
+	public double speed; //creates a variable for the driving speed
+	public double startTime; //creates a variable for the start time
+	public double passedTime; //creates a variable for the time passed
 	
 	public DriveForward (double driveTime, double speed) {
-		this.driveTime = driveTime;
-		this.speed = speed;
-		requires((Subsystem)driveTrain);
-		startTime = Utility.getFPGATime();
-		passedTime = 0;
+		this.driveTime = driveTime; //sets this class' driveTime variable equal to the value entered
+		this.speed = speed; //same with speed
+		requires((Subsystem)driveTrain); //requests exclusive use of the driveTrain subsystem
+		startTime = Utility.getFPGATime(); //sets a variable for the start time
+		passedTime = 0; //sets a variable for the time passed
 	}
 
 	@Override
@@ -42,8 +42,8 @@ public class DriveForward extends CommandBase {
 
 	@Override
 	protected void execute() {
-		passedTime = Utility.getFPGATime() - startTime;
-		driveTrain.tankDrive(-speed, -speed);
+		passedTime = Utility.getFPGATime() - startTime; //sets a variable for the time passed
+		driveTrain.tankDrive(-speed, -speed); //makes the robot move forward at a speed equal to the value entered
 	}
 
 	@Override

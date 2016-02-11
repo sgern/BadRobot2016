@@ -7,66 +7,67 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * 
+ * The robot will automatically
+ * 
  * @author Vaarun N.
  *
  */
-public class AutoShoot extends CommandBase {
+public class AutoShoot extends CommandBase
+{
+	// Initialize variables
+	double currentTime, endingTime, time;
 
-	double speed; 
-	double time;
-	
-	public AutoShoot (double speed) {
-		this.speed = speed ;
+	/**
+	 * 
+	 * @param time
+	 * 
+	 */
+	public AutoShoot(double time)
+	{
+		this.time = time * 1000000;
 		requires((Subsystem) shooter);
 	}
-	
-	
+
 	@Override
-	protected void initialize() {
+	protected void initialize()
+	{
 		shooter.shoot(0);
-		
+		currentTime = Utility.getFPGATime();
+		endingTime = currentTime + time;
 	}
 
 	@Override
-	public String getConsoleIdentity() {
-		
-		return "Shooter";
+	public String getConsoleIdentity()
+	{
+		return "Auto Shoot";
 	}
 
 	@Override
-	protected void end() {
+	protected void end()
+	{
 		shooter.shoot(0);
-		
+
 	}
 
 	@Override
-	protected void execute() {
-		shooter.shoot(speed);
-		time = Utility.getFPGATime();
-	
+	protected void execute()
+	{
+		shooter.shoot(1);
+		currentTime = Utility.getFPGATime();
 	}
 
 	@Override
-	protected void interrupted() {
+	protected void interrupted()
+	{
 		System.out.print("Shooter was interrupted");
-	
 	}
 
 	@Override
-	protected boolean isFinished() {
-		if (time-1000<0) {
-		return true;
-		}
-		else 	{
-			return false;
-		}
-		
-	
-	}
-		
-		
+	protected boolean isFinished()
+	{
 
-	
-	
-	
+		if(currentTime >= endingTime)
+			return true;
+		else return false;
+	}
 }
